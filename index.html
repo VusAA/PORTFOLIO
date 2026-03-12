@@ -11,8 +11,8 @@
       --text: #1d1d1f;
       --muted: #6e6e73;
       --line: rgba(0,0,0,0.08);
-      --glass: rgba(255,255,255,0.98);
-      --glass-strong: rgba(255,255,255,0.86);
+      --glass: rgba(255,255,255,0.18);
+      --glass-strong: rgba(255,255,255,0.16);
       --shadow: 0 20px 60px rgba(0,0,0,0.08);
       --shadow-soft: 0 10px 30px rgba(0,0,0,0.05);
       --radius: 30px;
@@ -182,11 +182,11 @@
     }
 
     .card {
-      transition: transform .35s ease, box-shadow .35s ease;
+      transition: transform .6s ease, box-shadow .6s ease;
     }
 
     .card:hover {
-      transform: translateY(-6px);
+      transform: translateY(-6px) scale(1.03);
       box-shadow: 0 28px 80px rgba(0,0,0,0.11);
     }
 
@@ -197,8 +197,32 @@
     .skills-block {
       padding: 28px;
     }
+	.skills-block {
+  margin-top: 24px;
+  }
 
-    .person-card { text-align: left; }
+    .person-card {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .person-photo {
+      width: 160px;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 18px;
+      display: block;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .person-info {
+      flex: 1;
+      min-width: 0;
+    }
 
     .person-card h2,
     .about-card h3,
@@ -281,12 +305,20 @@
     .skills-grid { margin-top: 18px; }
 
     .skill-item {
-      padding: 14px 16px;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.62);
-      font-size: 15px;
-    }
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.62);
+  font-size: 15px;
+	}
+	.skill-item img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
 
     .bottom-banner {
       margin-top: 8px;
@@ -346,6 +378,15 @@
         align-items: flex-start;
       }
 
+      .person-card {
+        flex-direction: column;
+      }
+
+      .person-photo {
+        width: 100%;
+        max-width: 260px;
+      }
+
       .hero { padding-top: 56px; }
       .project img { height: 230px; }
     }
@@ -361,7 +402,7 @@
 <body>
   <header>
     <div class="container nav">
-      <div class="logo">Andrei Vusko & Alesia Duka</div>
+      <div class="logo">Andrei Vusko & Alesia Duka • Portfolio architektoniczne</div>
       <nav>
         <ul>
           <li><a href="#o-nas">O nas</a></li>
@@ -376,36 +417,44 @@
 
   <main>
     <section class="hero container reveal" id="o-nas">
-      <span class="eyebrow">Architektura • Wizualizacje • Nowe technologie</span>
-      <h1>Nowoczesne portfolio architektoniczne w estetyce premium.</h1>
+      <span class="eyebrow">Architektura • Wizualizacje • Design</span>
+      <h1>Projektowanie zaczyna się od ciekawości.</h1>
       <p class="hero-subtitle">
-        Strona przedstawia Andrei Vusko i Alesię Dukę — studentów architektury,
+        Strona przedstawia absolwentów architektury,
         którzy łączą wrażliwość estetyczną, myślenie projektowe oraz zainteresowanie
-        nowymi technologiami i sztuczną inteligencją.
+        nowoczesnymi narzędziami projektowymi.
       </p>
 
       <div class="hero-panel">
         <div class="hero-grid">
           <article class="glass card person-card reveal">
-            <h2>Andrei Vusko</h2>
-            <span class="role">Student architektury • Politechnika Białostocka</span>
-            <p>
-              Zainteresowany nowoczesnym projektowaniem, modelowaniem 3D,
-              fotorealistycznymi wizualizacjami oraz projektami o różnej skali —
-              od architektury po urbanistykę. W pracy dąży do równowagi między
-              estetyką, funkcjonalnością i efektywnością ekonomiczną.
-            </p>
+            <img src="andrei-vusko.jpg" alt="Andrei Vusko" class="person-photo" />
+
+            <div class="person-info">
+              <h2>Andrei Vusko</h2>
+              <span class="role">Student architektury • Politechnika Białostocka</span>
+              <p>
+                Zainteresowany nowoczesnym projektowaniem, modelowaniem 3D,
+                fotorealistycznymi wizualizacjami oraz projektami o różnej skali —
+                od architektury po urbanistykę. W pracy dąży do równowagi między
+                estetyką, funkcjonalnością i efektywnością ekonomiczną.
+              </p>
+            </div>
           </article>
 
           <article class="glass card person-card reveal">
-            <h2>Alesia Duka</h2>
-            <span class="role">Studentka architektury • Politechnika Białostocka</span>
-            <p>
-              Pasjonuje się architekturą, sztuką i designem. Inspiruje się podróżami,
-              współczesną kulturą wizualną, modą oraz nowymi technologiami.
-              Szczególnie interesują ją narzędzia oparte na sztucznej inteligencji
-              i ich potencjał w przyszłości branży projektowej.
-            </p>
+            <img src="alesia-duka.jpg" alt="Alesia Duka" class="person-photo" />
+
+            <div class="person-info">
+              <h2>Alesia Duka</h2>
+              <span class="role">Studentka architektury • Politechnika Białostocka</span>
+              <p>
+                Pasjonuje się architekturą, sztuką i designem. Inspiruje się podróżami,
+                współczesną kulturą wizualną, modą oraz nowymi technologiami.
+                Szczególnie interesują ją narzędzia oparte na sztucznej inteligencji
+                i ich potencjał w przyszłości branży projektowej.
+              </p>
+            </div>
           </article>
         </div>
       </div>
@@ -418,7 +467,78 @@
           Krótka prezentacja wykształcenia, zainteresowań i podejścia do pracy projektowej.
         </p>
       </div>
+ <section class="container" id="projekty">
+      <div class="section-head reveal">
+        <h2 class="section-title">Inspiracje / miejsce na własne projekty</h2>
+        <p class="section-subtitle">
+          Ten blok możesz później podmienić na swoje wizualizacje, rendery, plansze lub realizacje.
+        </p>
+      </div>
 
+      <div class="projects-grid">
+        <article class="glass card project reveal">
+          <img src="projects/pr_1.jpg" alt="Projekt 1" />
+          <div class="project-content">
+            <h3>BUDYNEK MIESZKALNY <p>WIELORODZINNY</p></h3>
+            <p>Nowoczesny, siedmiokondygnacyjny budynek mieszkalny z centralnym atrium - zielonym „studnią światła" w sercu budynku.</p>
+          </div>
+        </article>
+
+        <article class="glass card project reveal">
+          <img src="projects/pr_2.jpg" alt="Projekt 2" />
+          <div class="project-content">
+            <h3>BULWARY GOŁDAPSKIE <p>"DZWIĘK LASU"</p></h3>
+            <p>Konkursowy projekt parku miejskiego</p>  
+			<p>w Gołdapi inspirowany sylwetką dzięcioła</p> 
+			<p>z czerwonym czubkiem.
+			Celem było stworzenie wielofunkcyjnej
+			przestrzeni nad rzeką - otwartej i dostępnej 
+			dla wszystkich mieszkańców.</p>
+          </div>
+        </article>
+
+        <article class="glass card project reveal">
+          <img src="projects/pr_3.jpg" alt="Projekt 3" />
+          <div class="project-content">
+            <h3>ARKADIA SENIORA <p>DOM SPOKOJNEJ STAROŚCI</p></h3>
+            <p>Projekt dotyczy domu opieki dla seniorów - spokojnego, przyjaznego miejsca, w którym
+starsze osoby mogą mieszkać, spędzać czas</p> <p>i czuć się komfortowo. </p>
+          </div>
+		   <div class="projects-grid">
+        </article>
+		<article class="glass card project reveal">
+          <img src="projects/pr_4.jpg" alt="Projekt 1" />
+          <div class="project-content">
+            <h3>BUDYNEK MIESZKALNY <p>WIELORODZINNY</p></h3>
+            <p>Głównym
+założeniem koncepcyjnym było
+stworzenie przyjaznego, komfortowego</p> 
+<p>i funkcjonalnego miejsca do życia, które
+odpowiadałoby na potrzeby
+mieszkańców oraz wpisywałoby się w
+kontekst urbanistyczny.</p>
+          </div>
+        </article>
+
+        <article class="glass card project reveal">
+          <img src="projects/pr_5.jpg" alt="Projekt 2" />
+          <div class="project-content">
+            <h3>CENTRUM SPORTU - BASEN <p>POLITECHNIKI BIAŁOSTOCKIEJ<p></h3>
+            <p> Główną ideą było odnalezienie balansu między
+współczesną architekturą a modernizmem </p> <p>lat 70, który dominuje na terenie kampusu PB. Ze względu na swoją skalę budynek stanowi
+architektoniczną dominantę, ale dzięki użytym formom i materiałom wpisuje się w kontekst miejsca i nie zaburza jego charakter.</p>
+          </div>
+        </article>
+
+        <article class="glass card project reveal">
+          <img src="projects/pr_6.jpg" alt="Projekt 3" />
+          <div class="project-content">
+            <h3>ADAPTACJA BUDYNKU <p>DAWNE BIAŁOSTOCKIE ZAKŁADY PRZEMYSŁU BAWEŁNIANEGO<p></h3>
+            <p>Celem projektu była adaptacja istniejącego budynku dawnej fabryki do nowej, wielofunkcyjnej roli. Głównym elementem projektu została nowoczesna szklana dobudowa.</p>
+          </div>
+		  </article>
+      </div>
+    </section>
       <div class="about-grid">
         <article class="glass card about-card reveal">
           <h3>O Andreiu</h3>
@@ -471,87 +591,24 @@
           Angielski — podstawowy (A2, dobrze rozumiem tekst i mowę)
         </p>
         <div class="skills-grid">
-          <div class="skill-item">AutoCAD</div>
-          <div class="skill-item">Revit</div>
-          <div class="skill-item">ArchiCAD</div>
-          <div class="skill-item">Blender + add-ons</div>
-          <div class="skill-item">SketchUp + V-Ray</div>
-          <div class="skill-item">Lumion</div>
-          <div class="skill-item">Twinmotion</div>
-          <div class="skill-item">Photoshop</div>
-          <div class="skill-item">Procreate iPadOS</div>
-          <div class="skill-item">Microsoft Word</div>
-          <div class="skill-item">Microsoft Excel</div>
-          <div class="skill-item">Microsoft PowerPoint</div>
+          <div class="skill-item"><img src="icons/autocad.svg">AutoCAD</div>
+<div class="skill-item"><img src="icons/autodeskrevit.svg">Revit</div>
+<div class="skill-item"><img src="icons/archicad.svg">ArchiCAD</div>
+<div class="skill-item"><img src="icons/blender.svg">Blender</div>
+<div class="skill-item"><img src="icons/sketchup.svg">SketchUp</div>
+<div class="skill-item"><img src="icons/lumion.svg">Lumion</div>
+<div class="skill-item"><img src="icons/twinmotion.svg">Twinmotion</div>
+<div class="skill-item"><img src="icons/photoshop.svg">Photoshop</div>
+<div class="skill-item"><img src="icons/procreate.svg">Procreate</div>
+<div class="skill-item"><img src="icons/word.png">Microsoft Word</div>
+<div class="skill-item"><img src="icons/excel.png">Microsoft Excel</div>
+<div class="skill-item"><img src="icons/powerpoint.png">Microsoft PowerPoint</div>
         </div>
         <p class="custom-note note">
           Posiadam zdolność szybkiego uczenia się nowych narzędzi projektowych oraz samodzielnego wyszukiwania,
           analizy i przyswajania informacji niezbędnych do pracy koncepcyjnej i technicznej.
         </p>
       </article>
-    </section>
-
-    <section class="container" id="cytaty">
-      <div class="section-head reveal">
-        <h2 class="section-title">Cytaty o architekturze</h2>
-        <p class="section-subtitle">
-          Krótkie cytaty w oryginalnym brzmieniu, dobrane tak, aby zachować elegancki i minimalistyczny charakter strony.
-        </p>
-      </div>
-
-      <div class="quotes-grid">
-        <article class="glass card quote reveal">
-          <p class="quote-text">“Firmitas, utilitas, venustas.”</p>
-          <small>Vitruvius • <em>De architectura</em></small>
-        </article>
-
-        <article class="glass card quote reveal">
-          <p class="quote-text">“L’architecture est le jeu savant, correct et magnifique des volumes assemblés sous la lumière.”</p>
-          <small>Le Corbusier • <em>Vers une architecture</em></small>
-        </article>
-
-        <article class="glass card quote reveal">
-          <p class="quote-text">“Less is more.”</p>
-          <small>Ludwig Mies van der Rohe</small>
-        </article>
-      </div>
-    </section>
-
-    <section class="container" id="projekty">
-      <div class="section-head reveal">
-        <h2 class="section-title">Inspiracje / miejsce na własne projekty</h2>
-        <p class="section-subtitle">
-          Ten blok możesz później podmienić na swoje wizualizacje, rendery, plansze lub realizacje.
-        </p>
-      </div>
-
-      <div class="projects-grid">
-        <article class="glass card project reveal">
-          <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1200&q=80" alt="Projekt 1" />
-          <div class="project-content">
-            <h3>Projekt 01</h3>
-            <p>Tutaj wpisz nazwę projektu i krótki opis koncepcji.</p>
-          </div>
-        </article>
-
-        <article class="glass card project reveal">
-          <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1200&q=80" alt="Projekt 2" />
-          <div class="project-content">
-            <h3>Projekt 02</h3>
-            <p>Tutaj wpisz nazwę projektu i najważniejszą informację.</p>
-          </div>
-        </article>
-
-        <article class="glass card project reveal">
-          <img src="https://images.unsplash.com/photo-1519643381401-22c77e60520e?auto=format&fit=crop&w=1200&q=80" alt="Projekt 3" />
-          <div class="project-content">
-            <h3>Projekt 03</h3>
-            <p>Tutaj wpisz typ projektu, lokalizację lub zakres opracowania.</p>
-          </div>
-        </article>
-      </div>
-    </section>
-
     <section class="container" id="kontakt">
       <div class="section-head reveal">
         <h2 class="section-title">Dane kontaktowe</h2>
@@ -584,7 +641,33 @@
         </article>
       </div>
     </section>
+</section>
 
+    <section class="container" id="cytaty">
+      <div class="section-head reveal">
+        <h2 class="section-title">Cytaty o architekturze</h2>
+        <p class="section-subtitle">
+          Krótkie cytaty w oryginalnym brzmieniu, dobrane tak, aby zachować elegancki i minimalistyczny charakter strony.
+        </p>
+      </div>
+
+      <div class="quotes-grid">
+        <article class="glass card quote reveal">
+          <p class="quote-text">“Firmitas, utilitas, venustas.”</p>
+          <small>Vitruvius • <em>De architectura</em></small>
+        </article>
+
+        <article class="glass card quote reveal">
+          <p class="quote-text">“L’architecture est le jeu savant, correct et magnifique des volumes assemblés sous la lumière.”</p>
+          <small>Le Corbusier • <em>Vers une architecture</em></small>
+        </article>
+
+        <article class="glass card quote reveal">
+          <p class="quote-text">“Less is more.”</p>
+          <small>Ludwig Mies van der Rohe</small>
+        </article>
+      </div>
+    </section>
     <section class="container reveal">
       <div class="bottom-banner">
         <h2>Forma. Światło. Technologia.</h2>
