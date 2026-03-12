@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Andrzej Vuśko & Alesia Duka | Architektura</title>
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --surface: rgba(255, 255, 255, 0.72);
+      --surface-strong: rgba(255, 255, 255, 0.92);
+      --text: #1d1d1f;
+      --muted: #6e6e73;
+      --line: rgba(0, 0, 0, 0.08);
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+      --radius: 28px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(180, 180, 200, 0.18), transparent 32%),
+        radial-gradient(circle at top right, rgba(210, 210, 230, 0.18), transparent 28%),
+        linear-gradient(180deg, #fbfbfd 0%, #f2f2f5 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--max));
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 22px 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(18px);
+      background: rgba(245, 245, 247, 0.72);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: 0.25s ease;
+    }
+
+    nav a:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 84px 0 40px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    h1 {
+      font-size: clamp(40px, 7vw, 78px);
+      line-height: 1.03;
+      letter-spacing: -0.04em;
+      max-width: 950px;
+      margin: 0 auto 18px;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0 auto;
+      font-size: clamp(18px, 2vw, 22px);
+      color: var(--muted);
+    }
+
+    .hero-card {
+      margin-top: 36px;
+      padding: 28px;
+      border-radius: 32px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.62));
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      text-align: left;
+    }
+
+    .info-box {
+      padding: 26px;
+      border-radius: 24px;
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+    }
+
+    .info-box h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .info-box p {
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    section {
+      padding: 38px 0;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 760px;
+      margin-bottom: 26px;
+    }
+
+    .quotes-grid,
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(16px);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .quote {
+      min-height: 250px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .quote-text {
+      font-size: 22px;
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+      margin-bottom: 22px;
+    }
+
+    .quote small,
+    .project p,
+    footer p {
+      color: var(--muted);
+    }
+
+    .project {
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .project img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .project-content {
+      padding: 22px;
+    }
+
+    .project h3 {
+      font-size: 24px;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .project p {
+      font-size: 16px;
+    }
+
+    .bottom-banner {
+      margin-top: 10px;
+      padding: 34px;
+      border-radius: 34px;
+      background: linear-gradient(135deg, #ffffff 0%, #f0f1f6 100%);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .bottom-banner h2 {
+      font-size: clamp(26px, 4vw, 42px);
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+
+    .bottom-banner p {
+      color: var(--muted);
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 17px;
+    }
+
+    footer {
+      padding: 30px 0 50px;
+      text-align: center;
+    }
+
+    @media (max-width: 980px) {
+      .quotes-grid,
+      .projects-grid,
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .project img {
+        height: 240px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding-top: 50px;
+      }
+
+      header {
+        position: static;
+      }
+
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav ul {
+        gap: 12px;
+      }
+
+      .hero-card,
+      .card,
+      .bottom-banner {
+        border-radius: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="logo">Andrzej Vuśko & Alesia Duka</div>
+      <nav>
+        <ul>
+          <li><a href="#o-nas">O nas</a></li>
+          <li><a href="#cytaty">Cytaty</a></li>
+          <li><a href="#ikony">Ikony architektury</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container" id="o-nas">
+      <span class="eyebrow">Minimalizm • Architektura • Inspiracja</span>
+      <h1>Architektura, która łączy ideę, emocję i precyzję.</h1>
+      <p>
+        Strona prezentuje Andrzeja Vuśko i Alesię Dukę — osoby zainteresowane nowoczesną architekturą,
+        estetyką przestrzeni i projektowaniem z myślą o człowieku.
+      </p>
+
+      <div class="hero-card">
+        <div class="hero-grid">
+          <div class="info-box">
+            <h2>Andrzej Vuśko</h2>
+            <p>
+              Skupia się na architekturze współczesnej, klarownej formie, funkcji i nowoczesnych narzędziach projektowych.
+            </p>
+          </div>
+          <div class="info-box">
+            <h2>Alesia Duka</h2>
+            <p>
+              Interesuje się estetyką, kompozycją, atmosferą przestrzeni i świadomym budowaniem architektonicznej narracji.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" id="cytaty">
+      <h2 class="section-title">Cytaty z klasyki architektury</h2>
+      <p class="section-subtitle">
+        Krótkie myśli, które do dziś definiują sposób patrzenia na przestrzeń, światło i formę.
+      </p>
+
+      <div class="quotes-grid">
+        <article class="card quote">
+          <p class="quote-text">“Firmitas, utilitas, venustas.”</p>
+          <small>Vitruvius • <em>De architectura</em></small>
+        </article>
+
+        <article class="card quote">
+          <p class="quote-text">“L’architecture est le jeu savant, correct et magnifique des volumes assemblés sous la lumière.”</p>
+          <small>Le Corbusier • <em>Vers une architecture</em></small>
+        </article>
+
+        <article class="card quote">
+          <p class="quote-text">“A house is a machine for living in.”</p>
+          <small>Le Corbusier • <em>Vers une architecture</em></small>
+        </article>
+      </div>
+    </section>
+
+    <section class="container" id="ikony">
+      <h2 class="section-title">Wybrane ikony architektury</h2>
+      <p class="section-subtitle">
+        Obiekty, które stały się punktami odniesienia dla współczesnego myślenia o przestrzeni.
+      </p>
+
+      <div class="projects-grid">
+        <article class="card project">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Fallingwater%20-%20Frank%20Lloyd%20Wright.jpg" alt="Fallingwater" />
+          <div class="project-content">
+            <h3>Fallingwater</h3>
+            <p>Frank Lloyd Wright • organiczna jedność architektury i krajobrazu.</p>
+          </div>
+        </article>
+
+        <article class="card project">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Pavell%C3%B3%20alemany%20Mies%20van%20der%20Rohe.jpg" alt="Pawilon Barceloński" />
+          <div class="project-content">
+            <h3>Pawilon Barceloński</h3>
+            <p>Ludwig Mies van der Rohe • minimalizm, proporcja i czystość materiału.</p>
+          </div>
+        </article>
+
+        <article class="card project">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Sagrada_Familia_01.jpg" alt="Sagrada Família" />
+          <div class="project-content">
+            <h3>Sagrada Família</h3>
+            <p>Antoni Gaudí • ekspresja konstrukcji, symboliki i światła.</p>
+          </div>
+        </article>
+
+        <article class="card project">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Villa_Savoye.jpg" alt="Villa Savoye" />
+          <div class="project-content">
+            <h3>Villa Savoye</h3>
+            <p>Le Corbusier • manifest nowoczesności i pięciu zasad architektury.</p>
+          </div>
+        </article>
+
+        <article class="card project">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Sydney_Opera_House_Sails.jpg" alt="Sydney Opera House" />
+          <div class="project-content">
+            <h3>Sydney Opera House</h3>
+            <p>Jørn Utzon • rzeźbiarska forma i silna tożsamość miejsca.</p>
+          </div>
+        </article>
+
+        <article class="card project">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Heydar_Aliyev_Cultural_Center.jpg" alt="Heydar Aliyev Center" />
+          <div class="project-content">
+            <h3>Heydar Aliyev Center</h3>
+            <p>Zaha Hadid • płynność geometrii i nowoczesna ekspresja przestrzeni.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="container" id="kontakt">
+      <div class="bottom-banner">
+        <h2>Forma. Światło. Proporcja.</h2>
+        <p>
+          Andrzej Vuśko i Alesia Duka inspirują się architekturą, która jest jednocześnie funkcjonalna,
+          nowoczesna i ponadczasowa.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 • Andrzej Vuśko & Alesia Duka • Strona inspirowana estetyką minimalizmu</p>
+    </div>
+  </footer>
+</body>
+</html>
