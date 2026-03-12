@@ -3,38 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Andrzej Vuśko & Alesia Duka | Architektura</title>
+  <title>Andrei Vusko & Alesia Duka | Portfolio Architektoniczne</title>
   <style>
     :root {
       --bg: #f5f5f7;
-      --surface: rgba(255, 255, 255, 0.72);
-      --surface-strong: rgba(255, 255, 255, 0.92);
+      --bg2: #fbfbfd;
       --text: #1d1d1f;
       --muted: #6e6e73;
-      --line: rgba(0, 0, 0, 0.08);
-      --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-      --radius: 28px;
-      --max: 1180px;
+      --line: rgba(0,0,0,0.08);
+      --glass: rgba(255,255,255,0.68);
+      --glass-strong: rgba(255,255,255,0.86);
+      --shadow: 0 20px 60px rgba(0,0,0,0.08);
+      --shadow-soft: 0 10px 30px rgba(0,0,0,0.05);
+      --radius: 30px;
+      --max: 1220px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Arial, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(180, 180, 200, 0.18), transparent 32%),
-        radial-gradient(circle at top right, rgba(210, 210, 230, 0.18), transparent 28%),
-        linear-gradient(180deg, #fbfbfd 0%, #f2f2f5 100%);
       color: var(--text);
-      line-height: 1.6;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(160,170,190,0.16), transparent 24%),
+        radial-gradient(circle at 90% 0%, rgba(200,210,230,0.16), transparent 24%),
+        linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
+      line-height: 1.65;
+      overflow-x: hidden;
     }
 
     .container {
@@ -42,144 +38,196 @@
       margin: 0 auto;
     }
 
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .9s ease, transform .9s ease;
+      will-change: opacity, transform;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .glass {
+      background: var(--glass);
+      border: 1px solid rgba(255,255,255,0.82);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+    }
+
     header {
-      padding: 22px 0;
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 100;
+      background: rgba(245,245,247,0.72);
       backdrop-filter: blur(18px);
-      background: rgba(245, 245, 247, 0.72);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(0,0,0,0.04);
     }
 
     .nav {
+      min-height: 74px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 20px;
+      justify-content: space-between;
+      gap: 24px;
     }
 
     .logo {
       font-size: 15px;
       font-weight: 700;
-      letter-spacing: 0.2px;
+      letter-spacing: .2px;
+      white-space: nowrap;
     }
 
     nav ul {
-      display: flex;
       list-style: none;
+      display: flex;
       gap: 18px;
       flex-wrap: wrap;
     }
 
     nav a {
-      color: var(--muted);
       text-decoration: none;
+      color: var(--muted);
       font-size: 14px;
-      transition: 0.25s ease;
+      transition: color .25s ease;
     }
 
-    nav a:hover {
-      color: var(--text);
-    }
+    nav a:hover { color: var(--text); }
 
     .hero {
-      padding: 84px 0 40px;
+      padding: 92px 0 52px;
       text-align: center;
     }
 
     .eyebrow {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       padding: 10px 18px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.78);
+      background: rgba(255,255,255,0.78);
       border: 1px solid var(--line);
       color: var(--muted);
       font-size: 14px;
-      margin-bottom: 24px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 22px;
     }
 
     h1 {
-      font-size: clamp(40px, 7vw, 78px);
-      line-height: 1.03;
-      letter-spacing: -0.04em;
-      max-width: 950px;
-      margin: 0 auto 18px;
+      font-size: clamp(42px, 7vw, 84px);
+      line-height: 1.02;
+      letter-spacing: -0.05em;
+      max-width: 1000px;
+      margin: 0 auto 20px;
     }
 
-    .hero p {
-      max-width: 760px;
+    .hero-subtitle {
+      max-width: 820px;
       margin: 0 auto;
-      font-size: clamp(18px, 2vw, 22px);
+      font-size: clamp(18px, 2vw, 23px);
       color: var(--muted);
     }
 
-    .hero-card {
-      margin-top: 36px;
-      padding: 28px;
-      border-radius: 32px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.62));
-      border: 1px solid rgba(255, 255, 255, 0.85);
+    .hero-panel {
+      margin-top: 40px;
+      padding: 22px;
+      border-radius: 36px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.58));
+      border: 1px solid rgba(255,255,255,0.9);
       box-shadow: var(--shadow);
     }
 
-    .hero-grid {
+    .hero-grid,
+    .about-grid,
+    .contacts-grid,
+    .projects-grid,
+    .quotes-grid,
+    .skills-grid {
       display: grid;
+      gap: 20px;
+    }
+
+    .hero-grid,
+    .about-grid,
+    .contacts-grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
-      text-align: left;
     }
 
-    .info-box {
-      padding: 26px;
-      border-radius: 24px;
-      background: var(--surface-strong);
-      border: 1px solid var(--line);
+    .projects-grid,
+    .quotes-grid,
+    .skills-grid {
+      grid-template-columns: repeat(3, 1fr);
     }
 
-    .info-box h2 {
-      font-size: 24px;
-      margin-bottom: 10px;
-      letter-spacing: -0.02em;
-    }
+    section { padding: 42px 0; }
 
-    .info-box p {
-      color: var(--muted);
-      font-size: 16px;
-    }
-
-    section {
-      padding: 38px 0;
-    }
+    .section-head { margin-bottom: 28px; }
 
     .section-title {
-      font-size: clamp(28px, 4vw, 44px);
-      letter-spacing: -0.03em;
+      font-size: clamp(30px, 4vw, 50px);
+      letter-spacing: -0.04em;
       margin-bottom: 10px;
     }
 
     .section-subtitle {
       color: var(--muted);
       font-size: 18px;
-      max-width: 760px;
-      margin-bottom: 26px;
-    }
-
-    .quotes-grid,
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      max-width: 840px;
     }
 
     .card {
-      background: var(--surface);
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(16px);
-      border-radius: var(--radius);
-      padding: 24px;
-      box-shadow: var(--shadow);
+      transition: transform .35s ease, box-shadow .35s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 28px 80px rgba(0,0,0,0.11);
+    }
+
+    .person-card,
+    .about-card,
+    .contact-card,
+    .quote,
+    .skills-block {
+      padding: 28px;
+    }
+
+    .person-card { text-align: left; }
+
+    .person-card h2,
+    .about-card h3,
+    .contact-card h3,
+    .skills-block h3 {
+      font-size: 26px;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+
+    .role {
+      display: inline-block;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      padding: 7px 12px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+    }
+
+    .person-card p,
+    .about-card p,
+    .project p,
+    .note,
+    footer p,
+    .contact-list div {
+      color: var(--muted);
+      font-size: 16px;
     }
 
     .quote {
@@ -190,16 +238,10 @@
     }
 
     .quote-text {
-      font-size: 22px;
+      font-size: 24px;
       line-height: 1.35;
-      letter-spacing: -0.02em;
-      margin-bottom: 22px;
-    }
-
-    .quote small,
-    .project p,
-    footer p {
-      color: var(--muted);
+      letter-spacing: -0.03em;
+      margin-bottom: 18px;
     }
 
     .project {
@@ -214,24 +256,42 @@
       display: block;
     }
 
-    .project-content {
-      padding: 22px;
-    }
+    .project-content { padding: 22px; }
 
     .project h3 {
       font-size: 24px;
+      letter-spacing: -0.03em;
       margin-bottom: 8px;
-      letter-spacing: -0.02em;
     }
 
-    .project p {
-      font-size: 16px;
+    .contact-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .contact-list div {
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.56);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+    }
+
+    .contact-list strong { color: var(--text); }
+
+    .skills-grid { margin-top: 18px; }
+
+    .skill-item {
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.62);
+      font-size: 15px;
     }
 
     .bottom-banner {
-      margin-top: 10px;
-      padding: 34px;
-      border-radius: 34px;
+      margin-top: 8px;
+      padding: 40px 30px;
+      border-radius: 36px;
       background: linear-gradient(135deg, #ffffff 0%, #f0f1f6 100%);
       border: 1px solid var(--line);
       box-shadow: var(--shadow);
@@ -239,70 +299,75 @@
     }
 
     .bottom-banner h2 {
-      font-size: clamp(26px, 4vw, 42px);
-      letter-spacing: -0.03em;
+      font-size: clamp(28px, 4vw, 46px);
+      letter-spacing: -0.04em;
       margin-bottom: 12px;
     }
 
     .bottom-banner p {
       color: var(--muted);
-      max-width: 700px;
+      max-width: 760px;
       margin: 0 auto;
-      font-size: 17px;
+      font-size: 18px;
+    }
+
+    .custom-note {
+      margin-top: 18px;
+      font-size: 14px;
     }
 
     footer {
-      padding: 30px 0 50px;
+      padding: 28px 0 56px;
       text-align: center;
     }
 
-    @media (max-width: 980px) {
-      .quotes-grid,
+    @media (max-width: 1080px) {
       .projects-grid,
-      .hero-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .project img {
-        height: 240px;
+      .quotes-grid,
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
-    @media (max-width: 640px) {
-      .hero {
-        padding-top: 50px;
-      }
-
-      header {
-        position: static;
+    @media (max-width: 820px) {
+      .hero-grid,
+      .about-grid,
+      .contacts-grid,
+      .projects-grid,
+      .quotes-grid,
+      .skills-grid {
+        grid-template-columns: 1fr;
       }
 
       .nav {
+        min-height: auto;
+        padding: 16px 0;
         flex-direction: column;
         align-items: flex-start;
       }
 
-      nav ul {
-        gap: 12px;
-      }
+      .hero { padding-top: 56px; }
+      .project img { height: 230px; }
+    }
 
-      .hero-card,
-      .card,
-      .bottom-banner {
-        border-radius: 24px;
-      }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal,
+      .reveal.visible,
+      .card { transition: none; transform: none; opacity: 1; }
     }
   </style>
 </head>
 <body>
   <header>
     <div class="container nav">
-      <div class="logo">Andrzej Vuśko & Alesia Duka</div>
+      <div class="logo">Andrei Vusko & Alesia Duka</div>
       <nav>
         <ul>
           <li><a href="#o-nas">O nas</a></li>
+          <li><a href="#profil">Profil</a></li>
           <li><a href="#cytaty">Cytaty</a></li>
-          <li><a href="#ikony">Ikony architektury</a></li>
+          <li><a href="#projekty">Projekty</a></li>
           <li><a href="#kontakt">Kontakt</a></li>
         </ul>
       </nav>
@@ -310,119 +375,222 @@
   </header>
 
   <main>
-    <section class="hero container" id="o-nas">
-      <span class="eyebrow">Minimalizm • Architektura • Inspiracja</span>
-      <h1>Architektura, która łączy ideę, emocję i precyzję.</h1>
-      <p>
-        Strona prezentuje Andrzeja Vuśko i Alesię Dukę — osoby zainteresowane nowoczesną architekturą,
-        estetyką przestrzeni i projektowaniem z myślą o człowieku.
+    <section class="hero container reveal" id="o-nas">
+      <span class="eyebrow">Architektura • Wizualizacje • Nowe technologie</span>
+      <h1>Nowoczesne portfolio architektoniczne w estetyce premium.</h1>
+      <p class="hero-subtitle">
+        Strona przedstawia Andrei Vusko i Alesię Dukę — studentów architektury,
+        którzy łączą wrażliwość estetyczną, myślenie projektowe oraz zainteresowanie
+        nowymi technologiami i sztuczną inteligencją.
       </p>
 
-      <div class="hero-card">
+      <div class="hero-panel">
         <div class="hero-grid">
-          <div class="info-box">
-            <h2>Andrzej Vuśko</h2>
+          <article class="glass card person-card reveal">
+            <h2>Andrei Vusko</h2>
+            <span class="role">Student architektury • Politechnika Białostocka</span>
             <p>
-              Skupia się na architekturze współczesnej, klarownej formie, funkcji i nowoczesnych narzędziach projektowych.
+              Zainteresowany nowoczesnym projektowaniem, modelowaniem 3D,
+              fotorealistycznymi wizualizacjami oraz projektami o różnej skali —
+              od architektury po urbanistykę. W pracy dąży do równowagi między
+              estetyką, funkcjonalnością i efektywnością ekonomiczną.
             </p>
-          </div>
-          <div class="info-box">
+          </article>
+
+          <article class="glass card person-card reveal">
             <h2>Alesia Duka</h2>
+            <span class="role">Studentka architektury • Politechnika Białostocka</span>
             <p>
-              Interesuje się estetyką, kompozycją, atmosferą przestrzeni i świadomym budowaniem architektonicznej narracji.
+              Pasjonuje się architekturą, sztuką i designem. Inspiruje się podróżami,
+              współczesną kulturą wizualną, modą oraz nowymi technologiami.
+              Szczególnie interesują ją narzędzia oparte na sztucznej inteligencji
+              i ich potencjał w przyszłości branży projektowej.
             </p>
-          </div>
+          </article>
         </div>
       </div>
     </section>
 
+    <section class="container" id="profil">
+      <div class="section-head reveal">
+        <h2 class="section-title">Profil i doświadczenie</h2>
+        <p class="section-subtitle">
+          Krótka prezentacja wykształcenia, zainteresowań i podejścia do pracy projektowej.
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <article class="glass card about-card reveal">
+          <h3>O Andreiu</h3>
+          <p>
+            Jestem studentem Wydziału Architektury Politechniki Białostockiej, po sześciu ukończonych semestrach.
+            Moja droga architektoniczna trwa już ponad 7 lat — przed studiami ukończyłem 4,5-letni cykl nauczania
+            w Mińskim Państwowym Kolegium Architektoniczno-Budowlanym na kierunku technik architekt (2022).
+            Obecnie poszukuję praktyki, aby zdobyć doświadczenie w biurze architektonicznym lub zespole projektowym,
+            uczestnicząc w rzeczywistych projektach. Interesuję się nowoczesnym projektowaniem, modelowaniem 3D,
+            fotorealistycznymi wizualizacjami oraz projektami o różnej skali — od architektury po urbanistykę.
+            W pracy dążę do równowagi między estetyką, funkcjonalnością a efektywnością ekonomiczną,
+            kierując się podejściem ekologicznym. Zaczynam również eksplorować potencjał sztucznej inteligencji
+            jako wsparcia w procesie projektowym. Jestem osobą spokojną, odpowiedzialną i komunikatywną.
+            Szybko się uczę, elastycznie dostosowuję do zespołu i terminów. Cenię współpracę i twórczy dialog.
+            Znam podstawy prawa budowlanego, potrafię czytać i stosować PB, WZ oraz MPZP w praktyce projektowej.
+            W przyszłości planuję studia magisterskie oraz rozwój zawodowy w projektach mających pozytywny wpływ
+            na otoczenie i życie społeczne.
+          </p>
+        </article>
+
+        <article class="glass card about-card reveal">
+          <h3>O Alesii</h3>
+          <p>
+            Nazywam się Alesia Duka i od zawsze kocham tworzyć — pasjonuję się architekturą, sztuką i designem.
+            Studiuję architekturę na Politechnice Białostockiej, obecnie jestem na trzecim roku. Pochodzę z Mińska
+            na Białorusi, gdzie ukończyłam szkołę plastyczną i zdobyłam tytuł technika architekta w kolegium
+            budowlano-architektonicznym. Uwielbiam podróże — obserwowanie życia w innych kulturach rozwija moją
+            wrażliwość przestrzenną i poszerza spojrzenie na architekturę. Inspiruję się współczesnym światem, modą,
+            sztuką, a także nowymi technologiami. Szczególnie interesują mnie sztuczna inteligencja i narzędzia
+            oparte na sieciach neuronowych — wierzę, że umiejętność korzystania z nich to przyszłość naszej branży.
+            Jestem osobą spokojną, otwartą i lubię pracować zespołowo. Często projektuję wspólnie z moim partnerem —
+            razem tworzymy zgrany, kreatywny duet, który zawsze stara się jak najlepiej realizować nasze ambitne pomysły.
+            W wolnym czasie rysuję, szyję i uczę się nowych programów projektowych — szybko przyswajam nowe narzędzia
+            i chętnie rozwijam swoje kompetencje. Chciałabym zdobywać doświadczenie w profesjonalnym biurze,
+            gdzie mogłabym połączyć wiedzę akademicką z praktyką zawodową. Świadomie podchodzę do kontekstu prawnego
+            projektowania, znam podstawy PB, WZ i MPZP i potrafię korzystać z nich w praktyce.
+          </p>
+        </article>
+      </div>
+
+      <article class="glass card skills-block reveal">
+        <h3>Wykształcenie, umiejętności i języki</h3>
+        <p class="note">
+          <strong>Wykształcenie:</strong><br>
+          Politechnika Białostocka, Wydział Architektury — studia inżynierskie (2022 – obecnie).<br>
+          Mińskie Państwowe Kolegium Architektoniczno-Budowlane, Białoruś — technik architekt (2018 – 2022).<br><br>
+          <strong>Języki:</strong><br>
+          Polski — biegły (B2/C1)<br>
+          Rosyjski — ojczysty<br>
+          Angielski — podstawowy (A2, dobrze rozumiem tekst i mowę)
+        </p>
+        <div class="skills-grid">
+          <div class="skill-item">AutoCAD</div>
+          <div class="skill-item">Revit</div>
+          <div class="skill-item">ArchiCAD</div>
+          <div class="skill-item">Blender + add-ons</div>
+          <div class="skill-item">SketchUp + V-Ray</div>
+          <div class="skill-item">Lumion</div>
+          <div class="skill-item">Twinmotion</div>
+          <div class="skill-item">Photoshop</div>
+          <div class="skill-item">Procreate iPadOS</div>
+          <div class="skill-item">Microsoft Word</div>
+          <div class="skill-item">Microsoft Excel</div>
+          <div class="skill-item">Microsoft PowerPoint</div>
+        </div>
+        <p class="custom-note note">
+          Posiadam zdolność szybkiego uczenia się nowych narzędzi projektowych oraz samodzielnego wyszukiwania,
+          analizy i przyswajania informacji niezbędnych do pracy koncepcyjnej i technicznej.
+        </p>
+      </article>
+    </section>
+
     <section class="container" id="cytaty">
-      <h2 class="section-title">Cytaty z klasyki architektury</h2>
-      <p class="section-subtitle">
-        Krótkie myśli, które do dziś definiują sposób patrzenia na przestrzeń, światło i formę.
-      </p>
+      <div class="section-head reveal">
+        <h2 class="section-title">Cytaty o architekturze</h2>
+        <p class="section-subtitle">
+          Krótkie cytaty w oryginalnym brzmieniu, dobrane tak, aby zachować elegancki i minimalistyczny charakter strony.
+        </p>
+      </div>
 
       <div class="quotes-grid">
-        <article class="card quote">
+        <article class="glass card quote reveal">
           <p class="quote-text">“Firmitas, utilitas, venustas.”</p>
           <small>Vitruvius • <em>De architectura</em></small>
         </article>
 
-        <article class="card quote">
+        <article class="glass card quote reveal">
           <p class="quote-text">“L’architecture est le jeu savant, correct et magnifique des volumes assemblés sous la lumière.”</p>
           <small>Le Corbusier • <em>Vers une architecture</em></small>
         </article>
 
-        <article class="card quote">
-          <p class="quote-text">“A house is a machine for living in.”</p>
-          <small>Le Corbusier • <em>Vers une architecture</em></small>
+        <article class="glass card quote reveal">
+          <p class="quote-text">“Less is more.”</p>
+          <small>Ludwig Mies van der Rohe</small>
         </article>
       </div>
     </section>
 
-    <section class="container" id="ikony">
-      <h2 class="section-title">Wybrane ikony architektury</h2>
-      <p class="section-subtitle">
-        Obiekty, które stały się punktami odniesienia dla współczesnego myślenia o przestrzeni.
-      </p>
+    <section class="container" id="projekty">
+      <div class="section-head reveal">
+        <h2 class="section-title">Inspiracje / miejsce na własne projekty</h2>
+        <p class="section-subtitle">
+          Ten blok możesz później podmienić na swoje wizualizacje, rendery, plansze lub realizacje.
+        </p>
+      </div>
 
       <div class="projects-grid">
-        <article class="card project">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Fallingwater%20-%20Frank%20Lloyd%20Wright.jpg" alt="Fallingwater" />
+        <article class="glass card project reveal">
+          <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1200&q=80" alt="Projekt 1" />
           <div class="project-content">
-            <h3>Fallingwater</h3>
-            <p>Frank Lloyd Wright • organiczna jedność architektury i krajobrazu.</p>
+            <h3>Projekt 01</h3>
+            <p>Tutaj wpisz nazwę projektu i krótki opis koncepcji.</p>
           </div>
         </article>
 
-        <article class="card project">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Pavell%C3%B3%20alemany%20Mies%20van%20der%20Rohe.jpg" alt="Pawilon Barceloński" />
+        <article class="glass card project reveal">
+          <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1200&q=80" alt="Projekt 2" />
           <div class="project-content">
-            <h3>Pawilon Barceloński</h3>
-            <p>Ludwig Mies van der Rohe • minimalizm, proporcja i czystość materiału.</p>
+            <h3>Projekt 02</h3>
+            <p>Tutaj wpisz nazwę projektu i najważniejszą informację.</p>
           </div>
         </article>
 
-        <article class="card project">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Sagrada_Familia_01.jpg" alt="Sagrada Família" />
+        <article class="glass card project reveal">
+          <img src="https://images.unsplash.com/photo-1519643381401-22c77e60520e?auto=format&fit=crop&w=1200&q=80" alt="Projekt 3" />
           <div class="project-content">
-            <h3>Sagrada Família</h3>
-            <p>Antoni Gaudí • ekspresja konstrukcji, symboliki i światła.</p>
-          </div>
-        </article>
-
-        <article class="card project">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Villa_Savoye.jpg" alt="Villa Savoye" />
-          <div class="project-content">
-            <h3>Villa Savoye</h3>
-            <p>Le Corbusier • manifest nowoczesności i pięciu zasad architektury.</p>
-          </div>
-        </article>
-
-        <article class="card project">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Sydney_Opera_House_Sails.jpg" alt="Sydney Opera House" />
-          <div class="project-content">
-            <h3>Sydney Opera House</h3>
-            <p>Jørn Utzon • rzeźbiarska forma i silna tożsamość miejsca.</p>
-          </div>
-        </article>
-
-        <article class="card project">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Heydar_Aliyev_Cultural_Center.jpg" alt="Heydar Aliyev Center" />
-          <div class="project-content">
-            <h3>Heydar Aliyev Center</h3>
-            <p>Zaha Hadid • płynność geometrii i nowoczesna ekspresja przestrzeni.</p>
+            <h3>Projekt 03</h3>
+            <p>Tutaj wpisz typ projektu, lokalizację lub zakres opracowania.</p>
           </div>
         </article>
       </div>
     </section>
 
     <section class="container" id="kontakt">
+      <div class="section-head reveal">
+        <h2 class="section-title">Dane kontaktowe</h2>
+        <p class="section-subtitle">
+          Na całej stronie użyto poprawnego zapisu imion i nazwisk: <strong>Andrei Vusko</strong> oraz <strong>Alesia Duka</strong>.
+        </p>
+      </div>
+
+      <div class="contacts-grid">
+        <article class="glass card contact-card reveal">
+          <h3>Andrei Vusko</h3>
+          <div class="contact-list">
+            <div><strong>Data urodzenia:</strong> 05.03.2003</div>
+            <div><strong>Obywatelstwo:</strong> białoruskie</div>
+            <div><strong>Email:</strong> vusko.andrei@gmail.com</div>
+            <div><strong>Telefon:</strong> +48 539 650 424</div>
+            <div><strong>Miasto:</strong> Białystok, Polska</div>
+          </div>
+        </article>
+
+        <article class="glass card contact-card reveal">
+          <h3>Alesia Duka</h3>
+          <div class="contact-list">
+            <div><strong>Data urodzenia:</strong> 28.01.2003</div>
+            <div><strong>Obywatelstwo:</strong> białoruskie</div>
+            <div><strong>Email:</strong> duka.alesia2@gmail.com</div>
+            <div><strong>Telefon:</strong> +48 539 650 423</div>
+            <div><strong>Miasto:</strong> Białystok, Polska</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="container reveal">
       <div class="bottom-banner">
-        <h2>Forma. Światło. Proporcja.</h2>
+        <h2>Forma. Światło. Technologia.</h2>
         <p>
-          Andrzej Vuśko i Alesia Duka inspirują się architekturą, która jest jednocześnie funkcjonalna,
-          nowoczesna i ponadczasowa.
+          Minimalistyczny układ, płynne animacje i subtelny efekt glassmorphism tworzą bardziej premium,
+          nowoczesną prezentację portfolio w duchu estetyki Apple.
         </p>
       </div>
     </section>
@@ -430,8 +598,29 @@
 
   <footer>
     <div class="container">
-      <p>© 2026 • Andrzej Vuśko & Alesia Duka • Strona inspirowana estetyką minimalizmu</p>
+      <p>© 2026 • Andrei Vusko & Alesia Duka • Portfolio architektoniczne</p>
     </div>
   </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    reveals.forEach((el, index) => {
+      el.style.transitionDelay = `${Math.min(index * 60, 360)}ms`;
+      observer.observe(el);
+    });
+  </script>
 </body>
 </html>
