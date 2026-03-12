@@ -7,10 +7,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portfolio Architektoniczne | Andrei Vusko & Alesia Duka</title>
-	<div class="lang-switch">
-  <button id="lang-pl" class="lang-btn active">PL</button>
-  <button id="lang-ru" class="lang-btn">RU</button>
-</div>
   <style>
     :root {
       --bg: #f5f5f7;
@@ -75,29 +71,47 @@
       -webkit-backdrop-filter: blur(18px);
       border-bottom: 1px solid rgba(0,0,0,0.04);
     }
+.lang-item {
+  display: flex;
+  align-items: center;
+}
+
 .lang-switch {
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 6px;
+  margin-left: 8px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.72);
+  border: 1px solid var(--line);
 }
 
 .lang-btn {
-  border: 1px solid var(--line);
-  background: rgba(255,255,255,0.7);
-  color: var(--text);
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--muted);
   padding: 8px 12px;
   border-radius: 999px;
   font-size: 12px;
+  line-height: 1;
   cursor: pointer;
-  transition: .25s ease;
+  transition: background .25s ease, color .25s ease, transform .25s ease;
 }
 
 .lang-btn:hover {
+  color: var(--text);
   background: rgba(255,255,255,0.95);
 }
 
 .lang-btn.active {
   background: var(--text);
-  color: white;
+  color: #fff;
+}
+
+.lang-btn:active {
+  transform: scale(0.96);
 }
     .nav {
       min-height: 74px;
@@ -416,7 +430,13 @@
         width: 100%;
         max-width: 260px;
       }
+.lang-item {
+  margin-top: 6px;
+}
 
+.lang-switch {
+  margin-left: 0;
+}
       .hero { padding-top: 56px; }
       .project img { height: 230px; }
     }
@@ -433,15 +453,21 @@
   <header>
     <div class="container nav">
       <div class="logo">Andrei Vusko & Alesia Duka • Portfolio architektoniczne</div>
-      <nav>
-        <ul>
-          <li><a href="#o-nas">O nas</a></li>
-          <li><a href="#profil">Profil</a></li>
-          <li><a href="#cytaty">Cytaty</a></li>
-          <li><a href="#projekty">Projekty</a></li>
-          <li><a href="#kontakt">Kontakt</a></li>
-        </ul>
-      </nav>
+     <nav>
+  <ul>
+    <li><a href="#o-nas" data-pl="O nas" data-ru="О нас">O nas</a></li>
+    <li><a href="#profil" data-pl="Profil" data-ru="Профиль">Profil</a></li>
+    <li><a href="#projekty" data-pl="Projekty" data-ru="Проекты">Projekty</a></li>
+    <li><a href="#kontakt" data-pl="Kontakt" data-ru="Контакты">Kontakt</a></li>
+	  <li><a href="#cytaty" data-pl="Cytaty" data-ru="Цитаты">Cytaty</a></li>
+    <li class="lang-item">
+      <div class="lang-switch">
+        <button id="lang-pl" class="lang-btn active" type="button">PL</button>
+        <button id="lang-ru" class="lang-btn" type="button">RU</button>
+      </div>
+    </li>
+  </ul>
+</nav>
     </div>
   </header>
 
@@ -451,11 +477,11 @@
       <h1 data-pl="Projektowanie zaczyna się od ciekawości."
     data-ru="Проектирование начинается с любопытства.">
 		  Projektowanie zaczyna się od ciekawości.</h1>
-      <p class="hero-subtitle">
-        Strona przedstawia absolwentów architektury,
-        którzy łączą wrażliwość estetyczną, myślenie projektowe oraz zainteresowanie
-        nowoczesnymi narzędziami projektowymi.
-      </p>
+      <p class="hero-subtitle"
+   data-pl="Strona przedstawia absolwentów architektury, którzy łączą wrażliwość estetyczną, myślenie projektowe oraz zainteresowanie nowoczesnymi narzędziami projektowymi."
+   data-ru="Страница представляет выпускников архитектуры, которые сочетают эстетическую чувствительность, проектное мышление и интерес к современным инструментам проектирования.">
+  Strona przedstawia absolwentów architektury, którzy łączą wrażliwość estetyczną, myślenie projektowe oraz zainteresowanie nowoczesnymi narzędziami projektowymi.
+</p>
 
       <div class="hero-panel">
         <div class="hero-grid">
@@ -718,24 +744,46 @@ architektoniczną dominantę, ale dzięki użytym formom i materiałom wpisuje s
   </footer>
 
   <script>
-    const reveals = document.querySelectorAll('.reveal');
+  const reveals = document.querySelectorAll('.reveal');
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: 0.12,
-      rootMargin: '0px 0px -40px 0px'
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.12,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  reveals.forEach((el, index) => {
+    el.style.transitionDelay = `${Math.min(index * 60, 360)}ms`;
+    observer.observe(el);
+  });
+
+  const langButtons = document.querySelectorAll('.lang-btn');
+  const translatable = document.querySelectorAll('[data-pl][data-ru]');
+
+  function setLanguage(lang) {
+    translatable.forEach(el => {
+      el.innerHTML = el.dataset[lang];
     });
 
-    reveals.forEach((el, index) => {
-      el.style.transitionDelay = `${Math.min(index * 60, 360)}ms`;
-      observer.observe(el);
-    });
-  </script>
+    document.documentElement.lang = lang === 'pl' ? 'pl' : 'ru';
+
+    document.getElementById('lang-pl').classList.toggle('active', lang === 'pl');
+    document.getElementById('lang-ru').classList.toggle('active', lang === 'ru');
+
+    localStorage.setItem('site-lang', lang);
+  }
+
+  document.getElementById('lang-pl').addEventListener('click', () => setLanguage('pl'));
+  document.getElementById('lang-ru').addEventListener('click', () => setLanguage('ru'));
+
+  const savedLang = localStorage.getItem('site-lang') || 'pl';
+  setLanguage(savedLang);
+</script>
 </body>
 </html>
