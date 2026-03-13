@@ -76,41 +76,45 @@
 }
 
 .lang-switch {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-left: 8px;
-  padding: 4px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.72);
+  position: relative;
+  display: inline-flex;
+  background: rgba(255,255,255,0.75);
   border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px;
+  overflow: hidden;
+}
+
+.lang-switch::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 38px;
+  height: calc(100% - 8px);
+  background: var(--text);
+  border-radius: 999px;
+  transition: transform .35s cubic-bezier(.4,0,.2,1);
+}
+
+.lang-switch.ru::before {
+  transform: translateX(42px);
 }
 
 .lang-btn {
-  appearance: none;
+  position: relative;
+  z-index: 2;
   border: none;
-  background: transparent;
-  color: var(--muted);
-  padding: 8px 12px;
-  border-radius: 999px;
+  background: none;
+  padding: 8px 14px;
   font-size: 12px;
-  line-height: 1;
+  color: var(--muted);
   cursor: pointer;
-  transition: background .25s ease, color .25s ease, transform .25s ease;
-}
-
-.lang-btn:hover {
-  color: var(--text);
-  background: rgba(255,255,255,0.95);
+  transition: color .25s ease;
 }
 
 .lang-btn.active {
-  background: var(--text);
-  color: #fff;
-}
-
-.lang-btn:active {
-  transform: scale(0.96);
+  color: white;
 }
     .nav {
       min-height: 74px;
@@ -765,18 +769,21 @@ architektoniczną dominantę, ale dzięki użytym formom i materiałom wpisuje s
   const langButtons = document.querySelectorAll('.lang-btn');
   const translatable = document.querySelectorAll('[data-pl][data-ru]');
 
-  function setLanguage(lang) {
-    translatable.forEach(el => {
-      el.innerHTML = el.dataset[lang];
-    });
+function setLanguage(lang) {
 
-    document.documentElement.lang = lang === 'pl' ? 'pl' : 'ru';
+  const switcher = document.querySelector('.lang-switch');
 
-    document.getElementById('lang-pl').classList.toggle('active', lang === 'pl');
-    document.getElementById('lang-ru').classList.toggle('active', lang === 'ru');
+  translatable.forEach(el => {
+    el.innerHTML = el.dataset[lang];
+  });
 
-    localStorage.setItem('site-lang', lang);
-  }
+  document.getElementById('lang-pl').classList.toggle('active', lang === 'pl');
+  document.getElementById('lang-ru').classList.toggle('active', lang === 'ru');
+
+  switcher.classList.toggle('ru', lang === 'ru');
+
+  localStorage.setItem('site-lang', lang);
+}
 
   document.getElementById('lang-pl').addEventListener('click', () => setLanguage('pl'));
   document.getElementById('lang-ru').addEventListener('click', () => setLanguage('ru'));
