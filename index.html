@@ -30,6 +30,7 @@
       --modal-z: 140;
       --header-z: 100;
       --scroll-z: 90;
+      --admin-shell-width: min(460px, calc(100vw - 32px));
     }
 
     * {
@@ -153,6 +154,15 @@
       color: var(--text);
     }
 
+    /* ВАЖНО: базовая desktop-геометрия навигации и языкового тумблера */
+    nav {
+      min-width: 0;
+    }
+
+    nav ul {
+      min-width: 0;
+    }
+
     .lang-toggle {
       position: relative;
       width: var(--lang-toggle-width);
@@ -243,7 +253,7 @@
       padding: 92px 0 52px;
       text-align: center;
     }
- 
+
     .eyebrow {
       display: inline-flex;
       align-items: center;
@@ -471,7 +481,7 @@
     .skills-grid {
       margin-top: 18px;
     }
- 
+
     .skill-item {
       display: flex;
       align-items: center;
@@ -513,7 +523,7 @@
 
     .scroll-top {
       position: fixed;
-      left: 22px;
+      right: 22px;
       bottom: 22px;
       z-index: var(--scroll-z);
       width: 52px;
@@ -648,18 +658,27 @@
       font-size: 16px;
     }
 
+    /* ВАЖНО: вся админка скрыта на обычном сайте и показывается только на /adminedit */
     .admin-shell {
       position: fixed;
       inset: auto 18px 18px auto;
       z-index: var(--admin-z);
-      display: flex;
+      display: none;
       flex-direction: column;
       gap: 12px;
       align-items: flex-end;
+      width: var(--admin-shell-width);
+      max-width: calc(100vw - 32px);
+    }
+
+    .admin-shell.visible {
+      display: flex;
     }
 
     .admin-panel {
-      width: min(460px, calc(100vw - 32px));
+      width: 100%;
+      max-height: min(78vh, 860px);
+      overflow: auto;
       padding: 18px;
       border-radius: 24px;
       background: rgba(255, 255, 255, 0.84);
@@ -672,6 +691,54 @@
 
     .admin-panel.open {
       display: block;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .admin-route-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* ВАЖНО: кнопка входа видна только на скрытом админ-маршруте */
+    .admin-login-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--text);
+      box-shadow: var(--shadow-soft);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 600;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+    }
+
+    .admin-login-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+
+    .admin-login-btn[hidden] {
+      display: none !important;
     }
 
     .panel-title {
@@ -762,12 +829,6 @@
       background: var(--success);
     }
 
-    .admin-toolbar {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
 
     .is-edit-mode [data-editable] {
       outline: 1px dashed transparent;
@@ -820,13 +881,164 @@
         flex-direction: column;
       }
 
+      /* ВАЖНО: на мобильных навигация и переключатель языка идут в две строки */
       .nav-right {
         width: 100%;
-        justify-content: space-between;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+
+      /* ВАЖНО: меню на телефонах и планшетах прокручивается по горизонтали,
+         чтобы RU-версия не ломала шапку и не переносилась некрасиво */
+      nav {
+        width: 100%;
+        min-width: 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        padding-bottom: 2px;
+      }
+
+      nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      nav ul {
+        flex-wrap: nowrap;
+        width: max-content;
+        min-width: 100%;
+        gap: 10px;
+        padding-right: 2px;
+      }
+
+      nav a,
+      nav button.link-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+        font-size: 12px;
+        padding: 9px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.54);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+      }
+
+      /* ВАЖНО: на мобильных язык уходит во вторую строку,
+         а эффект переключения меняется на стабильный segmented control
+         без движущегося ползунка, чтобы ничего не выезжало за границы */
+      .nav-right {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-end;
+      }
+
+      nav {
+        flex: 1 1 100%;
+      }
+
+      .lang-toggle {
+        --lang-toggle-width: 188px;
+        order: 2;
+        width: min(100%, var(--lang-toggle-width));
+        min-width: 0;
+        height: 42px;
+        margin-left: auto;
+        margin-right: 0;
+        justify-self: end;
+        padding: 4px;
+      }
+
+      .lang-toggle-thumb {
+        display: none;
+      }
+
+      .lang-btn {
+        font-size: 12px;
+        color: var(--muted);
+        transition:
+          color 0.22s ease,
+          background 0.22s ease,
+          box-shadow 0.22s ease,
+          transform 0.18s ease;
+      }
+
+      .lang-btn.active {
+        color: var(--text);
+        background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.74));
+        border: 1px solid rgba(255,255,255,0.92);
+        box-shadow:
+          0 6px 18px rgba(0, 0, 0, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.95);
+      }
+
+      .lang-btn:active {
+        transform: scale(0.98);
+      }
+
+      .project {
+        min-height: 100%;
+        touch-action: manipulation;
+      }
+
+      .project img {
+        height: clamp(200px, 52vw, 270px);
+      }
+
+      .project-content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 18px;
+      }
+
+      .project-title-row {
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .project h3 {
+        font-size: 21px;
+      }
+
+      .project-tag,
+      .project-meta,
+      .role {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+      }
+
+      .modal-top {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .modal-thumbs {
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(110px, 1fr);
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-bottom: 4px;
+      }
+
+      .modal-thumbs img {
+        height: 96px;
+      }
+
+      .scroll-top {
+        right: 14px;
+        bottom: 14px;
+        width: 48px;
+        height: 48px;
       }
     }
 
-    @media (max-width: 820px) {
+@media (max-width: 820px) {
       .hero-grid,
       .about-grid,
       .contacts-grid,
@@ -864,20 +1076,49 @@
 
       .admin-shell {
         inset: auto 12px 12px auto;
-      }
-
-      .admin-panel {
-        width: min(460px, calc(100vw - 24px));
+        max-width: calc(100vw - 24px);
       }
 
       .nav-right {
-        flex-direction: column;
         align-items: stretch;
+        gap: 12px;
       }
 
       .lang-toggle {
-        width: 100%;
+        --lang-toggle-width: 176px;
+        width: min(100%, var(--lang-toggle-width));
         min-width: 0;
+      }
+    }
+
+
+    @media (max-width: 560px) {
+      .nav-right {
+        gap: 10px;
+      }
+
+      nav ul {
+        gap: 8px;
+      }
+
+      nav a,
+      nav button.link-btn {
+        font-size: 11px;
+        padding: 8px 10px;
+      }
+
+      .lang-toggle {
+        --lang-toggle-width: 162px;
+        width: min(100%, var(--lang-toggle-width));
+        min-width: 0;
+        height: 40px;
+      }
+    }
+
+    @media (hover: none) {
+      .card:hover {
+        transform: none;
+        box-shadow: var(--shadow);
       }
     }
 
@@ -1233,9 +1474,16 @@
     </div>
   </div>
 
-  <div class="admin-shell">
+  <!-- ВАЖНО: админка показывается только на маршруте /adminedit -->
+  <div class="admin-shell" id="adminShell" aria-hidden="true">
+    <div class="admin-route-badge" id="adminRouteBadge">/adminedit · ?adminedit · #adminedit</div>
+    <button class="admin-login-btn" id="adminLoginBtn" type="button" hidden>Войти в админку</button>
+
     <div class="admin-panel" id="adminPanel" aria-hidden="true">
-      <div class="panel-title" data-i18n="adminTitle">Szybka edycja strony</div>
+      <div class="panel-header">
+        <div class="panel-title" data-i18n="adminTitle">Szybka edycja strony</div>
+        <button class="panel-btn" id="closeAdminPanel" type="button" data-i18n="adminClose">Zamknij panel</button>
+      </div>
 
       <div class="panel-group">
         <div class="status-pill" id="editStatus">
@@ -1270,16 +1518,13 @@
       </div>
 
       <p class="panel-note" data-i18n-html="adminNote">
-        To nie jest prawdziwa bezpieczeństwo serwerowe — to tylko klientowa ochrona dla statycznego pliku. Hasło i logika ochrony działają w przeglądarce. Ukryte wejście: <code>?admin=1</code> lub skrót <code>Ctrl + Alt + Shift + A</code>.
+        To nie jest prawdziwe bezpieczeństwo serwerowe — to tylko ochrona klientowa dla statycznego pliku. Wejście administracyjne działa wyłącznie na ścieżce <code>/adminedit</code>. Jeśli hosting nie obsługuje rewritingu do jednego <code>index.html</code>, trzeba ustawić fallback.
       </p>
-    </div>
-
-    <div class="admin-toolbar">
-      <button class="admin-btn" id="toggleAdminPanel" type="button" data-i18n="adminButton">Admin</button>
     </div>
   </div>
 
   <script>
+    // ВАЖНО: единый словарь переводов, который также встраивается в экспортируемый HTML
     const translations = {
       pl: {
         logo: "Vusko & Duka • Portfolio",
@@ -1373,6 +1618,7 @@
         modalDefaultTag: "Typ projektu",
 
         adminButton: "Admin",
+        adminClose: "Zamknij panel",
         adminTitle: "Szybka edycja strony",
         adminSelectedElementLabel: "Wybrany element",
         adminCodeLocationLabel: "Gdzie to znaleźć w kodzie",
@@ -1394,7 +1640,7 @@
         adminPasswordPrompt: "Wprowadź hasło administratora",
         adminAuthCancelled: "Anulowano logowanie",
         adminApplyNoSelection: "Najpierw wybierz element do edycji.",
-        adminNote: "To nie jest prawdziwa bezpieczeństwo serwerowe — to tylko klientowa ochrona dla statycznego pliku. Hasło i logika ochrony działają w przeglądarce. Ukryte wejście: <code>?admin=1</code> lub skrót <code>Ctrl + Alt + Shift + A</code>.",
+        adminNote: "To nie jest prawdziwe bezpieczeństwo serwerowe — to tylko ochrona klientowa dla statycznego pliku. Hasło i logika dostępu działają w przeglądarce. Wejście administracyjne działa wyłącznie na ścieżce <code>/adminedit</code>. Jeśli hosting nie obsługuje rewritingu do jednego <code>index.html</code>, trzeba ustawić fallback na hostingu.",
 
         project1ModalTitle: "Budynek mieszkalny wielorodzinny",
         project1ModalTag: "Architektura mieszkaniowa",
@@ -1513,6 +1759,7 @@
         modalDefaultTag: "Project type",
 
         adminButton: "Admin",
+        adminClose: "Close panel",
         adminTitle: "Quick page editor",
         adminSelectedElementLabel: "Selected element",
         adminCodeLocationLabel: "Where to find it in code",
@@ -1532,9 +1779,10 @@
         adminEmptyPath: "",
         adminWrongPassword: "Incorrect password",
         adminPasswordPrompt: "Enter administrator password",
+        adminLoginBtn: "Open admin panel",
         adminAuthCancelled: "Login cancelled",
         adminApplyNoSelection: "Select an element to edit first.",
-        adminNote: "This is not real server-side security — only client-side protection for a static file. The password and access logic run in the browser. Hidden entry: <code>?admin=1</code> or shortcut <code>Ctrl + Alt + Shift + A</code>.",
+        adminNote: "This is not real server-side security — only client-side protection for a static file. The password and access logic run in the browser. Administrative access works only on the <code>/adminedit</code> path. If the hosting does not support rewriting to a single <code>index.html</code>, you need to configure a fallback on the hosting side.",
 
         project1ModalTitle: "Multi-family residential building",
         project1ModalTag: "Residential architecture",
@@ -1653,6 +1901,7 @@
         modalDefaultTag: "Тип проекта",
 
         adminButton: "Admin",
+        adminClose: "Закрыть панель",
         adminTitle: "Быстрое редактирование страницы",
         adminSelectedElementLabel: "Выбранный элемент",
         adminCodeLocationLabel: "Где это находится в коде",
@@ -1672,9 +1921,10 @@
         adminEmptyPath: "",
         adminWrongPassword: "Неверный пароль",
         adminPasswordPrompt: "Введите пароль администратора",
+        adminLoginBtn: "Войти в админку",
         adminAuthCancelled: "Вход отменён",
         adminApplyNoSelection: "Сначала выбери элемент для редактирования.",
-        adminNote: "Это не настоящая серверная безопасность — только клиентская защита для статического файла. Пароль и логика доступа работают в браузере. Скрытый вход: <code>?admin=1</code> или сочетание <code>Ctrl + Alt + Shift + A</code>.",
+        adminNote: "Это не настоящая серверная безопасность — только клиентская защита для статического файла. Пароль и логика доступа работают в браузере. Админ-доступ работает только по пути <code>/adminedit</code>. Если хостинг не поддерживает rewrite на один <code>index.html</code>, нужно настроить fallback на стороне хостинга.",
 
         project1ModalTitle: "Многоквартирный жилой дом",
         project1ModalTag: "Жилая архитектура",
@@ -1702,6 +1952,7 @@
       }
     };
 
+    // ВАЖНО: централизованное состояние страницы и мини-админки
     const state = {
       currentLang: "pl",
       editMode: false,
@@ -1713,6 +1964,8 @@
 
     const PROJECT_IDS = ["project1", "project2", "project3", "project4", "project5", "project6"];
     const ADMIN_PASSWORD_HASH = "b02b03f5c8bc363166aa90641310447d95611e365c5e429654e78a74ea26b930";
+    const ADMIN_SESSION_KEY = "portfolioAdminUnlocked";
+    const ADMIN_ROUTE_SEGMENT = "adminedit";
 
     const langToggle = document.getElementById("langToggle");
     const langButtons = document.querySelectorAll("[data-lang-btn]");
@@ -1725,8 +1978,11 @@
     const modalClose = document.getElementById("modalClose");
     const scrollTopBtn = document.getElementById("scrollTopBtn");
 
+    const adminShell = document.getElementById("adminShell");
     const adminPanel = document.getElementById("adminPanel");
-    const toggleAdminPanelBtn = document.getElementById("toggleAdminPanel");
+    const adminLoginBtn = document.getElementById("adminLoginBtn");
+    const adminRouteBadge = document.getElementById("adminRouteBadge");
+    const closeAdminPanelBtn = document.getElementById("closeAdminPanel");
     const toggleEditModeBtn = document.getElementById("toggleEditMode");
     const editStatus = document.getElementById("editStatus");
     const editStatusText = document.getElementById("editStatusText");
@@ -1795,7 +2051,15 @@
         }
       });
 
-      toggleAdminPanelBtn.textContent = getText("adminButton");
+      if (closeAdminPanelBtn) {
+        closeAdminPanelBtn.textContent = getText("adminClose");
+      }
+      if (adminLoginBtn) {
+        adminLoginBtn.textContent = getText("adminLoginBtn");
+      }
+      if (adminRouteBadge) {
+        adminRouteBadge.textContent = `/${ADMIN_ROUTE_SEGMENT}`;
+      }
       modalClose.textContent = getText("modalCloseButton");
       updateAdminUITexts();
 
@@ -1815,6 +2079,42 @@
     function getSavedLanguage() {
       const saved = localStorage.getItem("portfolioLanguage");
       return translations[saved] ? saved : "pl";
+    }
+
+    // ВАЖНО: вход в админку разрешён через /adminedit,
+    // а для локального просмотра и простого статического хостинга также через ?adminedit или #adminedit.
+    function isAdminRoute() {
+      const path = window.location.pathname.replace(/\/+$/, "").toLowerCase();
+      const hash = window.location.hash.toLowerCase();
+      const params = new URLSearchParams(window.location.search);
+
+      const byPath = path === `/${ADMIN_ROUTE_SEGMENT}` || path.endsWith(`/${ADMIN_ROUTE_SEGMENT}`);
+      const byQuery = params.has(ADMIN_ROUTE_SEGMENT) || params.has("admin") || params.get("mode") === ADMIN_ROUTE_SEGMENT;
+      const byHash = hash === `#${ADMIN_ROUTE_SEGMENT}` || hash === "#admin" || hash.includes(ADMIN_ROUTE_SEGMENT);
+
+      return byPath || byQuery || byHash;
+    }
+
+    function showAdminShell() {
+      adminShell.classList.add("visible");
+      adminShell.setAttribute("aria-hidden", "false");
+    }
+
+    function showAdminLoginButton() {
+      if (adminLoginBtn) {
+        adminLoginBtn.hidden = false;
+      }
+    }
+
+    function hideAdminLoginButton() {
+      if (adminLoginBtn) {
+        adminLoginBtn.hidden = true;
+      }
+    }
+
+    function hideAdminShell() {
+      adminShell.classList.remove("visible");
+      adminShell.setAttribute("aria-hidden", "true");
     }
 
     function buildElementPath(el) {
@@ -1888,6 +2188,8 @@
 
     function openAdminPanel(force = false) {
       if (!state.adminUnlocked && !force) return;
+      showAdminShell();
+      hideAdminLoginButton();
       state.adminOpen = true;
       adminPanel.classList.add("open");
       adminPanel.setAttribute("aria-hidden", "false");
@@ -1897,6 +2199,9 @@
       state.adminOpen = false;
       adminPanel.classList.remove("open");
       adminPanel.setAttribute("aria-hidden", "true");
+      if (isAdminRoute() && !state.adminUnlocked) {
+        showAdminLoginButton();
+      }
     }
 
     function resetSelection() {
@@ -1932,7 +2237,7 @@
       const hash = await sha256(entered);
       if (hash === ADMIN_PASSWORD_HASH) {
         state.adminUnlocked = true;
-        sessionStorage.setItem("portfolioAdminUnlocked", "1");
+        sessionStorage.setItem(ADMIN_SESSION_KEY, "1");
         return true;
       }
       alert(getText("adminWrongPassword"));
@@ -1940,12 +2245,15 @@
     }
 
     function restoreAdminSession() {
-      if (sessionStorage.getItem("portfolioAdminUnlocked") === "1") {
+      if (sessionStorage.getItem(ADMIN_SESSION_KEY) === "1") {
         state.adminUnlocked = true;
       }
     }
 
     async function ensureAdminAccess() {
+      if (!isAdminRoute()) {
+        return false;
+      }
       if (state.adminUnlocked) return true;
       return await askAdminPassword();
     }
@@ -2047,6 +2355,7 @@
       });
     }
 
+    // ВАЖНО: экспорт строится из очищенной копии DOM, чтобы выгружать актуальный HTML без служебных состояний
     function sanitizeExportHtml(html) {
       return html
         .replace(
@@ -2059,26 +2368,99 @@
         );
     }
 
+    function buildCleanDocumentClone() {
+      const clone = document.documentElement.cloneNode(true);
+      const cloneBody = clone.querySelector("body");
+      const cloneModal = clone.querySelector("#projectModal");
+      const cloneAdminShell = clone.querySelector("#adminShell");
+      const cloneAdminPanel = clone.querySelector("#adminPanel");
+      const cloneSelected = clone.querySelectorAll(".selected-editable");
+      const cloneLangToggle = clone.querySelector("#langToggle");
+      const cloneLangButtons = clone.querySelectorAll("[data-lang-btn]");
+
+      clone.lang = state.currentLang;
+
+      if (cloneBody) {
+        cloneBody.classList.remove("modal-open", "is-edit-mode");
+      }
+
+      if (cloneModal) {
+        cloneModal.classList.remove("open");
+        cloneModal.setAttribute("aria-hidden", "true");
+      }
+
+      if (cloneAdminShell) {
+        cloneAdminShell.classList.remove("visible");
+        cloneAdminShell.setAttribute("aria-hidden", "true");
+      }
+
+      if (cloneAdminPanel) {
+        cloneAdminPanel.classList.remove("open");
+        cloneAdminPanel.setAttribute("aria-hidden", "true");
+      }
+
+      cloneSelected.forEach((el) => el.classList.remove("selected-editable"));
+
+      if (cloneLangToggle) {
+        cloneLangToggle.dataset.lang = state.currentLang;
+      }
+
+      cloneLangButtons.forEach((btn) => {
+        const isActive = btn.getAttribute("data-lang-btn") === state.currentLang;
+        btn.classList.toggle("active", isActive);
+        btn.setAttribute("aria-pressed", String(isActive));
+      });
+
+      const selectedLabelClone = clone.querySelector("#selectedLabel");
+      const selectedPathClone = clone.querySelector("#selectedPath");
+      const selectedContentClone = clone.querySelector("#selectedContent");
+
+      if (selectedLabelClone) {
+        selectedLabelClone.setAttribute("value", state.selectedEditable ? selectedLabel.value : getText("adminSelectHint"));
+      }
+
+      if (selectedPathClone) {
+        selectedPathClone.textContent = state.selectedEditable ? selectedPath.value : "";
+      }
+
+      if (selectedContentClone) {
+        selectedContentClone.textContent = state.selectedEditable ? selectedContent.value : "";
+      }
+
+      return clone;
+    }
+
     function getExportHtml() {
-      const originalLang = state.currentLang;
-      setLanguage("pl");
-      const html = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
-      const finalHtml = sanitizeExportHtml(html);
-      setLanguage(originalLang);
-      return finalHtml;
+      const clone = buildCleanDocumentClone();
+      const html = "<!DOCTYPE html>\n" + clone.outerHTML;
+      return sanitizeExportHtml(html);
     }
 
     async function copyHtmlToClipboard() {
       const html = getExportHtml();
+      const original = copyHtmlBtn.textContent;
+
       try {
-        await navigator.clipboard.writeText(html);
-        const original = copyHtmlBtn.textContent;
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(html);
+        } else {
+          const helper = document.createElement("textarea");
+          helper.value = html;
+          helper.setAttribute("readonly", "readonly");
+          helper.style.position = "fixed";
+          helper.style.top = "-9999px";
+          document.body.appendChild(helper);
+          helper.focus();
+          helper.select();
+          document.execCommand("copy");
+          helper.remove();
+        }
+
         copyHtmlBtn.textContent = getText("adminCopied");
         window.setTimeout(() => {
           copyHtmlBtn.textContent = getText("adminCopyHtml") || original;
         }, 1400);
       } catch (error) {
-        const original = copyHtmlBtn.textContent;
         copyHtmlBtn.textContent = getText("adminCopyError");
         window.setTimeout(() => {
           copyHtmlBtn.textContent = getText("adminCopyHtml") || original;
@@ -2096,7 +2478,7 @@
       document.body.appendChild(a);
       a.click();
       a.remove();
-      URL.revokeObjectURL(url);
+      window.setTimeout(() => URL.revokeObjectURL(url), 0);
     }
 
     function toggleScrollButtonVisibility() {
@@ -2126,22 +2508,29 @@
       });
     }
 
-    function handleSecretEntryOnLoad() {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("admin") === "1") {
-        toggleAdminPanelBtn.style.display = "inline-flex";
+    async function handleAdminRouteOnLoad() {
+      if (!isAdminRoute()) {
+        hideAdminLoginButton();
+        hideAdminShell();
+        closeAdminPanel();
+        setEditMode(false);
+        return;
       }
+
+      showAdminShell();
+      showAdminLoginButton();
+      const ok = await ensureAdminAccess();
+      if (!ok) {
+        closeAdminPanel();
+        setEditMode(false);
+        return;
+      }
+
+      openAdminPanel(true);
     }
 
-    function bindSecretHotkey() {
-      document.addEventListener("keydown", async (e) => {
-        if (e.ctrlKey && e.altKey && e.shiftKey && e.key.toLowerCase() === "a") {
-          e.preventDefault();
-          const ok = await ensureAdminAccess();
-          if (!ok) return;
-          openAdminPanel();
-        }
-
+    function bindGlobalKeyboard() {
+      document.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && modal.classList.contains("open")) {
           closeProjectModal();
         }
@@ -2149,17 +2538,20 @@
     }
 
     function bindAdminActions() {
-      toggleAdminPanelBtn.addEventListener("click", async () => {
-        if (state.adminOpen) {
+      if (closeAdminPanelBtn) {
+        closeAdminPanelBtn.addEventListener("click", () => {
           closeAdminPanel();
-          return;
-        }
+          setEditMode(false);
+        });
+      }
 
-        const ok = await ensureAdminAccess();
-        if (!ok) return;
-
-        openAdminPanel();
-      });
+      if (adminLoginBtn) {
+        adminLoginBtn.addEventListener("click", async () => {
+          const ok = await ensureAdminAccess();
+          if (!ok) return;
+          openAdminPanel(true);
+        });
+      }
 
       toggleEditModeBtn.addEventListener("click", async () => {
         const ok = await ensureAdminAccess();
@@ -2210,20 +2602,20 @@
       });
     }
 
-    function init() {
+    async function init() {
       restoreAdminSession();
-      handleSecretEntryOnLoad();
       bindLanguageButtons();
       bindProjectCards();
       bindEditableSelection();
       bindAdminActions();
       bindModalActions();
-      bindSecretHotkey();
+      bindGlobalKeyboard();
       initRevealObserver();
       initScrollTop();
       setLanguage(getSavedLanguage());
       closeAdminPanel();
       setEditMode(false);
+      await handleAdminRouteOnLoad();
     }
 
     init();
